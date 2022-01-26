@@ -47,6 +47,61 @@ async function run() {
       res.json(alltrips);
     });
 
+    app.get("/allblogs", async (req, res) => {
+      const cursor = BlogSCollection.find({});
+      const allblogs = await cursor.toArray();
+      res.json(allblogs);
+    });
+
+    app.get("/allexperince", async (req, res) => {
+      const cursor = userExperincecollection.find({});
+      const allexperince = await cursor.toArray();
+      res.json(allexperince);
+    });
+
+    app.post("/addtour", async (req, res) => {
+      const tourdetails = req.body;
+      const touresult = await BlogSCollection.insertOne(tourdetails);
+      res.json(touresult);
+    });
+
+    app.post("/addblog", async (req, res) => {
+      const blogdetails = req.body;
+      const blogresult = await BlogSCollection.insertOne(blogdetails);
+      res.json(blogresult);
+    });
+    app.post("/addexperince", async (req, res) => {
+      const experiencedetails = req.body;
+      const experienceresult = await userExperincecollection.insertOne(
+        experiencedetails
+      );
+      res.json(experienceresult);
+    });
+
+    app.delete("/deleteblog/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await BlogSCollection.deleteOne(query);
+      console.log(result);
+      res.json(result);
+    });
+
+    app.delete("/deletexperince/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await userExperincecollection.deleteOne(query);
+      console.log(result);
+      res.json(result);
+    });
+
+    app.delete("/deletetour/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await tripsCollection.deleteOne(query);
+      console.log(result);
+      res.json(result);
+    });
+
     ///getting admins database
     app.get("/users/:email", async (req, res) => {
       const email = req.params.email;
