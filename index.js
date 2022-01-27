@@ -73,7 +73,7 @@ async function run() {
 
     app.post("/addtour", async (req, res) => {
       const tourdetails = req.body;
-      const touresult = await BlogSCollection.insertOne(tourdetails);
+      const touresult = await tripsCollection.insertOne(tourdetails);
       res.json(touresult);
     });
 
