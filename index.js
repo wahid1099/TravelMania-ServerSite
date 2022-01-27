@@ -64,6 +64,13 @@ async function run() {
       const allblogs = await cursor.toArray();
       res.json(allblogs);
     });
+    //getting service with id
+    app.get("/blogdetails/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const singleblog = await BlogSCollection.findOne(query);
+      res.json(singleblog);
+    });
 
     app.get("/allexperince", async (req, res) => {
       const cursor = userExperincecollection.find({});
